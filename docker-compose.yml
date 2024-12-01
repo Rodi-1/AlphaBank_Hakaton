@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  backend1:
+    image: shach1/alpha-bank-backend:1.0.0
+    container_name: backend_app
+    ports:
+      - "8080:8080"
+    environment:
+      - SECOND_BACKEND_URL=http://backend2:5000
+    depends_on:
+      - ml_app
+    networks:
+      - backend-network
+
+  ml_app:
+    image: shach1/alpha-bank-ml:1.0.2
+    container_name: ml_app
+    ports:
+      - "5000:5000"
+    networks:
+      - backend-network
+
+  frontend:
+    image: shach1/alpha-bank-frontend:1.0.2
+    container_name: frontend_app
+    ports:
+      - "3000:80"
+    networks:
+      - backend-network
+    depends_on:
+      - backend1
+      - ml_app
+
+networks:
+  backend-network:
+    driver: bridge
