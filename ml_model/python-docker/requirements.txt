@@ -1,0 +1,6 @@
+Flask
+joblib
+pandas==2.2.3
+scikit-learn==1.5.2
+xgboost
+Werkzeug==2.2.2
